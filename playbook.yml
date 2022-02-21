@@ -1,0 +1,102 @@
+---
+  - hosts: all
+    become: true
+    vars:
+      docker_users:
+        - vagrant
+      docker_compose_version: "2.2.3"
+      docker_compose_arch: x86_64
+      docker_compose_url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-Linux-{{ docker_compose_arch }}"
+      docker_compose_path: /usr/local/bin/docker-compose
+      my_packages:
+        - htop
+        - ncdu
+        - net-tools
+        - open-vm-tools
+        - tmux
+        - tree
+        - vim
+      docker_old_packages:
+        - docker
+        - docker-engine
+        - docker.io
+        - containerd
+        - runc
+
+      docker_required_packages:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+
+      docker_new_packages:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    tasks:
+      - name: update apt cache and upgrade system
+        apt:
+          update_cache: yes
+          upgrade: yes
+
+      - name: remove old packages
+        apt:
+          name: "{{ docker_old_packages }}"
+          state: absent
+
+      - name: install my packages
+        apt:
+          name: "{{ my_packages }}"
+          state: present
+
+      - name: install required packages
+        apt:
+          name: "{{ docker_required_packages }}"
+          state: present
+
+      - name: adding docker repository key
+        apt_key:
+          url: https://download.docker.com/linux/ubuntu/gpg
+          state: present
+
+      - name: adding docker package repository
+        apt_repository:
+          repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_facts.lsb.codename }} stable
+
+      - name: install docker
+        apt:
+          name: "{{ docker_new_packages }}"
+          state: present
+
+      - name: Check current docker-compose version.
+        command: "{{ docker_compose_path }} --version"
+        register: docker_compose_current_version
+        check_mode: false
+        changed_when: false
+        failed_when: false
+
+      - name: Delete existing docker-compose version if it's different.
+        file:
+          path: "{{ docker_compose_path }}"
+          state: absent
+        when: >
+          docker_compose_current_version.stdout is defined
+          and docker_compose_version not in docker_compose_current_version.stdout
+
+      - name: Install Docker Compose (if configured).
+        get_url:
+          url: "{{ docker_compose_url }}"
+          dest: "{{ docker_compose_path }}"
+          mode: 0755
+        when: >
+          docker_compose_current_version.stdout is not defined
+          or docker_compose_version not in docker_compose_current_version.stdout
+      
+      - name: Ensure docker users are added to the docker group.
+        user:
+          name: "{{ item }}"
+          groups: docker
+          append: true
+        with_items: "{{ docker_users }}"
