@@ -13,7 +13,7 @@ source venv/bin/activate
 pip install -U pip
 pip install -r requirements.txt
 ```
-
+> :warning: **According to Ansible documentation, it is not possible to install Ansible on Microsoft Windows.** Unless you use [this](https://phoenixnap.com/kb/install-ansible-on-windows) document
 
 ### Setup
 ```
