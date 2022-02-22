@@ -30,7 +30,7 @@ Assuming the Host IP is 192.168.1.10:
 | Gitea | HTTP | 3000 | http://192.168.1.10:3000 |
 | Gitea | SSH | 2233 |  |
 | MinIO | HTTP | 9001 | http://192.168.1.10:9001 |
-- MinIO Username & Password: **minioadmin**
+> MinIO Username & Password: **minioadmin**
 
 ### Login
 ```
