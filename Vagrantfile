@@ -1,10 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+
 Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vbox|
     vbox.memory = 4096
     vbox.cpus = 4
-    vbox.gui = false
   end
-  config.vm.box = "ubuntu/focal64"
+  config.vm.provider "libvirt" do |vbox|
+    vbox.memory = 4096
+    vbox.cpus = 4
+  end
+  config.vm.box = "generic/ubuntu2004"
   config.vm.hostname = "ubuntu"
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 50000, host: 50000
