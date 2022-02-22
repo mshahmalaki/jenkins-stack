@@ -1,5 +1,5 @@
 # Jenkins Stack
-Setup [jenkins-stack-docker](https://github.com/ssbostan/jenkins-stack-docker) with Vagrant & Ansible
+Setup [jenkins-stack-docker](https://github.com/mshahmalaki/jenkins-stack-docker) with Vagrant & Ansible
 
 ### Clone repository with submodule
 ```
