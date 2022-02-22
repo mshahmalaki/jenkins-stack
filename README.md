@@ -23,11 +23,14 @@ vagrant up --provision --provider=<PROVIDER>
 
 ### URLs and Credentials
 Assuming the Host IP is 192.168.1.10:
-- Jenkins: http://192.168.1.10:8080 <br/>
-- Gitea: http://192.168.1.10:3000 <br/>
-- Gitea (SSH): ssh://192.168.1.10:2233 <br/>
-- MinIO: http://192.168.1.10:9001 <br/>
-  - MinIO Username & Password: **minioadmin**
+
+| Service | Protocol | Port | Example | 
+|---------|:--------:|:------:|---------|
+| Jenkins | HTTP | 8080 | http://192.168.1.10:8080 |
+| Gitea | HTTP | 3000 | http://192.168.1.10:3000 |
+| Gitea | SSH | 2233 |  |
+| Gitea | HTTP | 9001 | http://192.168.1.10:9001 |
+- MinIO Username & Password: **minioadmin**
 
 ### Login
 ```
