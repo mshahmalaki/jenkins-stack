@@ -25,10 +25,12 @@ vagrant up --provision --provider=<PROVIDER>
 Assuming the Host IP is 192.168.1.10:
 
 | Service | Protocol | Port | Example | 
-|---------|:--------:|:------:|---------|
+|---------|:---------|:------|---------|
 | Jenkins | HTTP | 8080 | http://192.168.1.10:8080 |
 | Gitea | HTTP | 3000 | http://192.168.1.10:3000 |
 | Gitea | SSH | 2233 |  |
+| Registry Web UI | HTTP | 80 | http://192.168.1.10 |
+| Registry | HTTPS | 443 | https://192.168.1.10 |
 | MinIO | HTTP | 9001 | http://192.168.1.10:9001 |
 > MinIO Username & Password: **minioadmin**
 
