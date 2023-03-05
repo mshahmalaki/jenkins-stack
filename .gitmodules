@@ -1,3 +1,4 @@
 [submodule "jenkins-stack-docker"]
 	path = jenkins-stack-docker
 	url = https://github.com/mshahmalaki/jenkins-stack-docker.git
+  branch = main
